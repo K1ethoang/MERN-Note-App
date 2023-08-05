@@ -1,12 +1,15 @@
-import express from "express";
+import app from "./app";
+import env from "./util/validateEnv";
+import mongoose from "mongoose";
 
-const app = express();
-const port = undefined;
+const port = env.PORT;
 
-app.get("/", (req, res) => {
-    res.send("Hello world!");
-});
-
-app.listen(port!, () => {
-    console.log(`Server running on port: ${port}`);
-});
+// Connect DB
+mongoose.connect(env.MONGODB_URL)
+    .then(() => {
+        console.log("Mongo connected!");
+        app.listen(port, () => {
+            console.log(`Server running on port: ${port}`);
+        });
+    })
+    .catch((error) => console.log(error + "Can not connect to Mongo"));
