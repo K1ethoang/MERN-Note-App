@@ -1,20 +1,19 @@
 import "dotenv/config";
+import morgan from "morgan";
 import express, { NextFunction, Request, Response } from "express";
-import NoteModel from "./models/Note";
+import route from "./routes";
 
 const app = express();
 
-app.get("/", async (req, res, next) => {
-    try {
-        // throw Error("K1ethoang");
-        const notes = await NoteModel.find().exec();
-        res.status(200).json(notes);
-    } catch (error) {
-        next(error);
-    }
-});
+app.use(express.json());
 
-app.use((req, res, next) => { next(Error("Endpoint not found")) });
+// HTTP logger
+app.use(morgan("dev"));
+
+// Route init
+route(app);
+
+app.use((req, res, next) => next(Error("Endpoint not found")));
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
