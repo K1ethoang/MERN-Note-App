@@ -3,8 +3,10 @@ import NoteController from "../controllers/NoteController";
 
 const router = express.Router();
 
-router.post("/create", NoteController.createNode);
-router.get("/:noteId", NoteController.getNote);
 router.get("/", NoteController.getNotes);
+router.get("/:noteId", NoteController.getNote);
+router.patch("/:noteId", NoteController.updateNote);
+router.delete("/:noteId", NoteController.deleteNote);
+router.post("/create", NoteController.createNote);
 
 export default router;
