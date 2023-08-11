@@ -1,0 +1,10 @@
+.note {
+    height: 200px;
+    min-width: 150px;
+    transition: box-shadow .2s ease-in-out;
+    cursor: pointer;
+}
+
+.note:hover {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
