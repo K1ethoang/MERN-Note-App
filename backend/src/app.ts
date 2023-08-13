@@ -3,13 +3,29 @@ import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
 import express, { NextFunction, Request, Response } from "express";
 import route from "./routes";
+import session from "express-session";
+import env from "./util/validateEnv";
+import MongoStore from "connect-mongo";
 
 const app = express();
 
-app.use(express.json());
-
 // HTTP logger
 app.use(morgan("dev"));
+
+app.use(express.json());
+
+app.use(session({
+    secret: env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 60 * 60 * 1000, // 1 hour
+    },
+    rolling: true,
+    store: MongoStore.create({
+        mongoUrl: env.MONGODB_URL,
+    }),
+}));
 
 // Route init
 route(app);

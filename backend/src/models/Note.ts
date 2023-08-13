@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
+import { Schema, InferSchemaType, model } from "mongoose";
 
-const Schema = mongoose.Schema;
 const NoteSchema = new Schema({
     title: { type: String, required: true },
     text: { type: String },
 }, { timestamps: true });
 
-export default mongoose.model("Note", NoteSchema);
+type Note = InferSchemaType<typeof NoteSchema>;
+
+export default model<Note>("Note", NoteSchema);

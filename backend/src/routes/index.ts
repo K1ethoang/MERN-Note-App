@@ -1,8 +1,10 @@
 import { Express } from "express-serve-static-core";
-import note from "./note"; ''
+import noteRoutes from "./note";
+import userRoutes from "./user";
 
 const route = (app: Express) => {
-    app.use("/api/notes", note);
+    app.use("/api/notes", noteRoutes);
+    app.use("/api/users", userRoutes);
 }
 
 export default route;
